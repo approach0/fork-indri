@@ -98,8 +98,8 @@ SHARED = @SHARED@
 
 # C compiler and compiling options
 # C++ compiler and compiling/linking options
-CFLAGS = @DEFS@ @CPPFLAGS@ @CFLAGS@ $(INCPATH) $(SHARED)
-CXXFLAGS    = @DEFS@ @CPPFLAGS@ @CXXFLAGS@ $(INCPATH) $(SHARED)
+CFLAGS = @DEFS@ @CPPFLAGS@ @CFLAGS@ $(INCPATH) $(SHARED) -fno-tree-vectorize
+CXXFLAGS    = @DEFS@ @CPPFLAGS@ @CXXFLAGS@ $(INCPATH) $(SHARED) -fno-tree-vectorize
 CXXFLAGS_NOOPT    = @DEFS@ @CPPFLAGS@ -g $(INCPATH) $(SHARED)
 CPPLDFLAGS  = @LDFLAGS@ @LIBS@
 
