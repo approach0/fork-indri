@@ -173,6 +173,15 @@ std::string indri::index::MemoryIndex::term( lemur::api::TERMID_T termID ) {
   return entry->term;
 }
 
+unsigned int indri::index::MemoryIndex::term_max_tf( lemur::api::TERMID_T termID )
+{
+  if( termID <= 0 || termID > (int)_idToTerm.size() )
+    return 0;
+
+  term_entry* entry = _idToTerm[ termID - 1 ];
+  return entry->termData->maxTermFreq;
+}
+
 //
 // field
 //
@@ -631,8 +640,14 @@ lemur::api::DOCID_T indri::index::MemoryIndex::addDocument( indri::api::ParsedDo
     indri::index::TermData* termData = entry->termData;
     term_entry* old = entry;
 
+	/* find the max TF value, to be used by dynamic pruning */
+	int termFreq = entry->list.recent_termFrequency();
+	//printf("%s: tf=%d\n", entry->term, termFreq);
+	termData->maxTermFreq = lemur_compat::max<int>( termData->maxTermFreq, termFreq );
+
     termData->maxDocumentLength = lemur_compat::max<int>( termData->maxDocumentLength, words.size() );
     termData->minDocumentLength = lemur_compat::min<int>( termData->minDocumentLength, words.size() );
+
     termData->corpus.documentCount++;
 
     entry->list.endDocument();

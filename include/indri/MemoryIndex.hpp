@@ -141,6 +141,7 @@ namespace indri {
       lemur::api::TERMID_T term( const std::string& t );
       lemur::api::TERMID_T term( const char* t );
       std::string term( lemur::api::TERMID_T termID );
+      unsigned int term_max_tf( lemur::api::TERMID_T termID );
 
       int field( const char* fieldName );
       int field( const std::string& fieldName );

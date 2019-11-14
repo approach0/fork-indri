@@ -42,12 +42,13 @@ namespace indri {
 
     public:
       TermData() :
+        maxTermFreq(0),
         maxDocumentLength(0),
         minDocumentLength(MAX_INT32)
       {
         term = 0;
       }
-      
+
       struct term_less {
       public:
         bool operator () ( const TermData* one, const TermData* two ) const {
@@ -57,6 +58,7 @@ namespace indri {
 
       TermFieldStatistics corpus;
 
+      unsigned int maxTermFreq;
       unsigned int maxDocumentLength;    // maximum length of any document containing this term
       unsigned int minDocumentLength;    // minimum length of any document containing this term
 
@@ -119,8 +121,9 @@ inline void termdata_clear( indri::index::TermData* termData, int fieldCount ) {
     field.lastDocument = 0;
   }
 
-  termData->minDocumentLength = MAX_INT32;
+  termData->maxTermFreq = 0;
   termData->maxDocumentLength = 0;
+  termData->minDocumentLength = MAX_INT32;
 }
 
 inline void termdata_merge( indri::index::TermData* termData, indri::index::TermData* merger, int fieldCount ) {
@@ -135,6 +138,7 @@ inline void termdata_merge( indri::index::TermData* termData, indri::index::Term
     field.totalCount += mergeField.totalCount;
   }
 
+  termData->maxTermFreq = lemur_compat::max( termData->maxTermFreq, merger->maxTermFreq );
   termData->maxDocumentLength = lemur_compat::max( termData->maxDocumentLength, merger->maxDocumentLength );
   termData->minDocumentLength = lemur_compat::min( termData->minDocumentLength, merger->minDocumentLength );
 }
@@ -149,7 +153,8 @@ inline void termdata_compress( indri::utility::RVLCompressStream& stream, indri:
          << termData->corpus.documentCount;
 
   // max-score statistics
-  stream << termData->maxDocumentLength
+  stream //<< termData->maxTermFreq
+         << termData->maxDocumentLength
          << termData->minDocumentLength;
   // field statistics
   for( int i=0; i<fieldCount; i++ ) {
@@ -164,7 +169,8 @@ inline void termdata_decompress( indri::utility::RVLDecompressStream& stream, in
          >> termData->corpus.documentCount;
 
   // max-score statistics
-  stream >> termData->maxDocumentLength
+  stream //>> termData->maxTermFreq
+         >> termData->maxDocumentLength
          >> termData->minDocumentLength;
 
   // field statistics

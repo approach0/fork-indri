@@ -294,3 +294,7 @@ int indri::index::DocListMemoryBuilder::documentFrequency() const {
 int indri::index::DocListMemoryBuilder::termFrequency() const {
   return _termFrequency;
 }
+
+int indri::index::DocListMemoryBuilder::recent_termFrequency() const {
+  return _termFrequency - _lastTermFrequency;
+}

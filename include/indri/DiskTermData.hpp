@@ -88,7 +88,9 @@ inline indri::index::DiskTermData* disktermdata_decompress( indri::utility::RVLD
   }
 
   if( mode & indri::index::DiskTermData::WithString ) {
+  //printf("EEE %s %u \n", __FILE__, __LINE__);
     stream >> termLocation;
+  //printf("EEE %s %u \n", __FILE__, __LINE__);
   }
 
   if( mode & indri::index::DiskTermData::WithOffsets ) {

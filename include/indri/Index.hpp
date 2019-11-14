@@ -71,6 +71,7 @@ namespace indri {
       virtual lemur::api::TERMID_T term( const char* term ) = 0;
       virtual lemur::api::TERMID_T term( const std::string& term ) = 0;
       virtual std::string term( lemur::api::TERMID_T termID ) = 0;
+      virtual unsigned int term_max_tf( lemur::api::TERMID_T termID ) = 0;
 
       virtual int field( const char* fieldName ) = 0;
       virtual int field( const std::string& fieldName ) = 0;

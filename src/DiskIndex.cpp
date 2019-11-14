@@ -262,6 +262,17 @@ std::string indri::index::DiskIndex::term( lemur::api::TERMID_T termID ) {
   return result;
 }
 
+unsigned int indri::index::DiskIndex::term_max_tf( lemur::api::TERMID_T termID ) {
+  indri::index::DiskTermData* diskTermData = _fetchTermData( termID );
+
+  if( diskTermData ) {
+    unsigned int ret = diskTermData->termData->maxTermFreq;
+    ::disktermdata_delete( diskTermData );
+    return ret;
+  }
+
+  return 0;
+}
 //
 // documentLength
 //

@@ -104,14 +104,15 @@ namespace indri {
       
       void startDocument( int docID );
       void addLocation( int location );
-      void endDocument();
+      void endDocument(); /* update _lastTermFrequency */
 
       void clear();
       void flush();
       bool empty();
 
       int documentFrequency() const;
-      int termFrequency() const;
+      int termFrequency() const; /* **accumulated** term frequency */
+      int recent_termFrequency() const;
       size_t memorySize() const;
     };
   }
