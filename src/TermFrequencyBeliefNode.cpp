@@ -126,9 +126,8 @@ void indri::infnet::TermFrequencyBeliefNode::indexChanged( indri::index::Index& 
 
     indri::index::TermData* termData = _list->termData();
 
-    double maxOccurrences = ceil( double(termData->maxDocumentLength) * maximumFraction );
-
-    _maximumScore = _function.scoreOccurrence( maxOccurrences, termData->maxDocumentLength );
+    //double maxOccurrences = ceil( double(termData->maxDocumentLength) * maximumFraction );
+    _maximumScore = 1.f; //_function.scoreOccurrence( maxOccurrences, );
     _maximumBackgroundScore = _function.scoreOccurrence( 0, 1 );
   }
 }

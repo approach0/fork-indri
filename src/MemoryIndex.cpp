@@ -645,7 +645,6 @@ lemur::api::DOCID_T indri::index::MemoryIndex::addDocument( indri::api::ParsedDo
 	//printf("%s: tf=%d\n", entry->term, termFreq);
 	termData->maxTermFreq = lemur_compat::max<int>( termData->maxTermFreq, termFreq );
 
-    termData->maxDocumentLength = lemur_compat::max<int>( termData->maxDocumentLength, words.size() );
     termData->minDocumentLength = lemur_compat::min<int>( termData->minDocumentLength, words.size() );
 
     termData->corpus.documentCount++;
