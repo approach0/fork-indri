@@ -20,7 +20,8 @@ public:
   ~GMemException() {}
 };
 
-#define GMEM_EXCEP throw(GMemException)
+// ISO C++17 does not allow dynamic exception specifications
+#define GMEM_EXCEP // throw(GMemException)
 
 #else // USE_EXCEPTIONS
 
